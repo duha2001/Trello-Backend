@@ -1,0 +1,13 @@
+{
+  "name": "Trello-Backend",
+  "version": "1.0.0",
+  "description": "anhdudev mern stack",
+  "main": "src/server.js",
+  "repository": "https://github.com/duha2001/Trello-Backend.git",
+  "author": "anhdudev",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
