@@ -1,17 +1,17 @@
 import { StatusCodes } from 'http-status-codes';
+import ApiError from '~/utils/ApiError';
 
 const createNew = async (req, res, next) => {
   try {
     console.log('req.body: ', req.body);
 
     // Điều hướng dữ liệu sang tầng Service
-    res
-      .status(StatusCodes.CREATED)
-      .json({ message: 'POST from Controller: API create new boards' });
+    throw new ApiError(StatusCodes.BAD_GATEWAY, 'Error!!!');
+    // res
+    //   .status(StatusCodes.CREATED)
+    //   .json({ message: 'POST from Controller: API create new boards' });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      errors: error.message,
-    });
+    next(error);
   }
 };
 
