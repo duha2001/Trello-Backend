@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { StatusCodes } from 'http-status-codes';
+import ApiError from '~/utils/ApiError';
 
 const createNew = async (req, res, next) => {
   /**
@@ -37,11 +38,13 @@ const createNew = async (req, res, next) => {
     // Validate dữ liệu xong hợp lệ, thì cho request đi tiếp sang controller
     next();
   } catch (error) {
-    console.log(error);
+    const errorMessage = new Error(error).message;
     // UNPROCESSABLE_ENTITY là mã lỗi 422 dùng để báo lỗi không định dạng được đối tượng
-    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-      errors: new Error(error).message,
-    });
+    const customError = new ApiError(
+      StatusCodes.UNPROCESSABLE_ENTITY,
+      errorMessage
+    );
+    next(customError);
   }
 };
 
