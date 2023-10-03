@@ -32,13 +32,10 @@ const createNew = async (req, res, next) => {
       }),
   });
   try {
-    console.log('req.body: ', req.body);
     // Chỉ định abortEarly: false để trường hợp có nhiều lỗi validation thì trả về tất cả lỗi
     await correctCondition.validateAsync(req.body, { abortEarly: false });
-    // next()
-    res
-      .status(StatusCodes.CREATED)
-      .json({ message: 'POST form Validation: API create new boards' });
+    // Validate dữ liệu xong hợp lệ, thì cho request đi tiếp sang controller
+    next();
   } catch (error) {
     console.log(error);
     // UNPROCESSABLE_ENTITY là mã lỗi 422 dùng để báo lỗi không định dạng được đối tượng
