@@ -2,6 +2,7 @@
 import ApiError from '~/utils/ApiError';
 import { slugify } from '~/utils/formatters';
 import { boardModel } from '~/models/boardModel';
+import { StatusCodes } from 'http-status-codes';
 
 // Cần truyền vào một reqBody để hứng dữ liệu từ tầng Controller
 const createNew = async (reqBody) => {
@@ -27,6 +28,20 @@ const createNew = async (reqBody) => {
     throw error;
   }
 };
+
+const getDetails = async (boardId) => {
+  try {
+    const board = await boardModel.getDetails(boardId);
+    if (!board) {
+      throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found!');
+    }
+    // Trả về kết quả, trong Service luôn phải có return
+    return board;
+  } catch (error) {
+    throw error;
+  }
+};
 export const boardService = {
   createNew,
+  getDetails,
 };
